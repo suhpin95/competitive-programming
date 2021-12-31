@@ -39,12 +39,18 @@ let nums = [1,2,5,2,8,-1,-5];
 // // slidingWindowSum(nums, 2);
 
 var maxSubArr = (nums) => {
-    var sum = nums[0], maxVal = -Infinity;
-    for(var i = 1; i < nums.length; i++){
-        sum = Math.max(nums[i], sum+nums[i]);
-        maxVal = Math.max(maxVal, sum)
-        console.log(sum, maxVal)
+    // approach
+    var sum = 0;
+    var maxSum = 0;
+    // loop through all the elements
+    for(var i = 0; i < nums.length ; i++){
+        sum += nums[i];
+         // store the max value
+        maxSum = Math.max(sum, maxSum);
+        // if the sum < 0 sum = 0
+        if(sum < 0 ){
+            sum  = 0;
+        }
     }
-    console.log(maxVal);
 }
 maxSubArr(nums)
