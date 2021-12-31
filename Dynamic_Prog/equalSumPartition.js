@@ -3,7 +3,7 @@
  * find if the array can be partitioned into two subsets such that the sum of elements in both subsets is equal
  */
 
-const arr = [1,5,11,5];
+const arr = [1,5,6,1,11];
 var sum = 0;
 for(var i = 0; i < arr.length; i++){
     sum += arr[i];
@@ -37,15 +37,16 @@ const subsetSum = (targetSum ,array, lengthOfArray) =>{
     if( targetSum === 0){
         return dp[lengthOfArray][targetSum] =  true;
     }
-    if(dp[lengthOfArray - 1][targetSum] != 0){
-        return dp[lengthOfArray - 1][targetSum]
+    if(dp[lengthOfArray - 1][targetSum] !== 0){
+        return dp[lengthOfArray-1][targetSum]
     }
     if(array[lengthOfArray - 1] <= targetSum ){
-        return dp[lengthOfArray - 1][targetSum] = subsetSum(targetSum - array[lengthOfArray - 1], array, lengthOfArray - 1) 
+        return dp[lengthOfArray ][targetSum] = 
+                subsetSum(targetSum - array[lengthOfArray - 1], array, lengthOfArray - 1) 
                 || 
                 subsetSum(targetSum, array, lengthOfArray - 1)
     } else{
-        return dp[lengthOfArray - 1][targetSum]= subsetSum(targetSum, array, lengthOfArray - 1)
+        return dp[lengthOfArray][targetSum]= subsetSum(targetSum, array, lengthOfArray - 1)
     }
 }
 console.log(equalPartition())
