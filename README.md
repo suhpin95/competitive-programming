@@ -12,3 +12,5 @@ It also contains few basic questions on the topic related to:
 * [Frequency Counter](./Patterns/Frequency_Counter)
 
 ### [Recusrion](./Recursion)
+
+### [Blind 75](./Blind75)
