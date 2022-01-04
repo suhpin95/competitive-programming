@@ -34,6 +34,7 @@ const slidingWindow = (str) => {
         }
         // get the longest
         longest = Math.max(longest, i - start + 1);
+        // to start with the next character in the loop
         seen[char] = i + 1;
     }
     console.log(longest);
