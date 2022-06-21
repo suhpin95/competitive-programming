@@ -3,7 +3,7 @@
  * @param {number} target
  * @return {number}
  */
-var search = function(nums, target) {
+const search = function(nums, target) {
     //check the edge cases
     if(nums.length == 0)return nums[0];
 
@@ -17,15 +17,17 @@ var search = function(nums, target) {
         if(target === nums[mid])return mid;
 
     // since rotated array we check if
-    // target is somewhere in the left or right side of the array
+    // possible ascending sort
         if(nums[left] < nums[mid]){
+            // checks if the number is in the left half
             if(target > nums[left] && target < nums[mid]){
                 right = mid - 1;
             } else {
                 left = mid + 1;
             }
         } else {
-            if(target > nums[right] && target < nums[mid]){
+            // checks if the element is in the right half
+            if(target < nums[right] && target > nums[mid]){
                 left = mid + 1;
             } else {
                 right = mid - 1;
