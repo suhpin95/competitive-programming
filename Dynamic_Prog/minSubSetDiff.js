@@ -10,6 +10,7 @@ const arr = [1,2,7];
 const sum = arr.reduce((a,b) => a+b, 0)
 const n = arr.length;
 
+const dp = new Array(n+1).map(_ => new Array(sum + 1));
 const minSubSetDiff = (arr, range, sumUntilNow, n) => {
     // if we get to the end of the element
     if(n==0){
