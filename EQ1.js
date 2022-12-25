@@ -53,7 +53,3 @@ const board = [
 ];
 
 console.log(findPath(board));
-
-/**
- *
- */
