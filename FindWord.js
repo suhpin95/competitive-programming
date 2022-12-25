@@ -7,72 +7,62 @@
  * If there are multiple matches, return any one. Implement in Javascript
  */
 
-/**
- grid1 = [
-['c', 'c', 't', 'n', 'a', 'x'],
-['c', 'c', 'a', 't', 'n', 't'],
-['a', 'c', 'n', 'n', 't', 't'],
-['t', 'n', 'i', 'i', 'p', 'p'],
-['a', 'o', 'o', 'o', 'a', 'a'],
-['s', 'a', 'a', 'a', 'o', 'o'],
-['k', 'a', 'i', 'o', 'k', 'i'],
-]
-word1 = "catnip"
+const findWord = (grid, word) => {
+  // if word len == 0
+  if (word.length === 0) return [];
 
- */
-
-const findWord = (board, word) => {
-  // use backTracking
-  // need to store the rows and cols
-  const ROWLLEN = board.length;
-  const COLLEN = board[0].length;
-  const DIR = [
-    [0, 1],
-    [1, 0],
-  ];
-  const backTrack = (row, col, index) => {
+  const backTracking = (row, col, index) => {
     if (index >= word.length) {
-      return;
+      return true;
     }
+    // traversal conditions
     if (
       row < 0 ||
-      row >= ROWLLEN ||
+      row >= grid.length ||
       col < 0 ||
-      col >= COLLEN ||
-      board[row][col] != word[index]
+      col >= grid[row].length ||
+      grid[row][col] != word[index]
     ) {
-      return null;
+      return false;
     }
 
-    // marking the visited cell
-    let tempChar = board[row][col];
-    board[row][col] = '#';
+    return (
+      backTracking(row + 1, col, index + 1) ||
+      backTracking(row, col + 1, index + 1)
+    );
+  };
 
-    for (let [r, c] of DIR) {
-      backTrack(row + r, col + c, index + 1);
-    }
+  // traversal of grid
 
-    board[row][col] = tempChar;
-
-    return res;
-  }; // backTrack;
-
-  let res = [];
-  for (let i = 0; i < ROWLLEN; i++) {
-    for (let j = 0; j < COLLEN; j++) {
-      if (backTrack(i, j, 0)) {
-        res.push([i, j].concat(backTrack(i, j, 0)));
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[i].length; j++) {
+      if (grid[i][j] === word[0]) {
+        if (backTracking(i, j, 0)) return getCoordinates(i, j, word.length, 0);
       }
     }
   }
-  return res;
+  return [];
 };
 
-const board = [
-  ['A', 'B', 'C', 'E'],
-  ['S', 'F', 'C', 'S'],
-  ['A', 'D', 'E', 'E'],
-];
-word = 'ABCCED';
+// Recursive helper function to check if the word is present in the grid starting from a given cell
 
-console.log(findWord(board, word));
+// Helper function to generate a list of coordinates for the given word
+function getCoordinates(row, col, length, direction) {
+  const coordinates = [];
+  for (let i = 0; i < length; i++) {
+    coordinates.push([row, col]);
+    if (direction === 0) {
+      row++;
+    } else {
+      col++;
+    }
+  }
+  return coordinates;
+}
+const grid = [
+  ['A', 'B', 'C', 'D'],
+  ['E', 'F', 'G', 'H'],
+  ['I', 'J', 'K', 'L'],
+  ['M', 'N', 'O', 'P'],
+];
+console.log(findWord(grid, 'ABCG')); // [[0, 0], [1, 0], [2, 0], [3, 0]]
