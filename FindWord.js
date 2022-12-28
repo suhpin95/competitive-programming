@@ -6,7 +6,8 @@
  * Given a grid and a word, write a function that returns the location of the word in the grid as a list of coordinates.
  * If there are multiple matches, return any one. Implement in Javascript
  */
-
+let result = [];
+let hashSet = new Set();
 const findWord = (grid, word) => {
   // if word len == 0
   if (word.length === 0) return [];
@@ -26,6 +27,11 @@ const findWord = (grid, word) => {
       return false;
     }
 
+    if (grid[row][col] == word[index] && !hashSet.has(grid[row][col])) {
+      hashSet.add(grid[row][col]);
+      result.push([row, col]);
+    }
+
     return (
       backTracking(row + 1, col, index + 1) ||
       backTracking(row, col + 1, index + 1)
@@ -37,32 +43,20 @@ const findWord = (grid, word) => {
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[i].length; j++) {
       if (grid[i][j] === word[0]) {
-        if (backTracking(i, j, 0)) return getCoordinates(i, j, word.length, 0);
+        if (backTracking(i, j, 0)) return result;
       }
     }
   }
-  return [];
+  return result;
 };
 
-// Recursive helper function to check if the word is present in the grid starting from a given cell
-
-// Helper function to generate a list of coordinates for the given word
-function getCoordinates(row, col, length, direction) {
-  const coordinates = [];
-  for (let i = 0; i < length; i++) {
-    coordinates.push([row, col]);
-    if (direction === 0) {
-      row++;
-    } else {
-      col++;
-    }
-  }
-  return coordinates;
-}
 const grid = [
-  ['A', 'B', 'C', 'D'],
-  ['E', 'F', 'G', 'H'],
-  ['I', 'J', 'K', 'L'],
-  ['M', 'N', 'O', 'P'],
+  ['c', 'c', 't', 'n', 'a', 'x'],
+  ['c', 'c', 'a', 't', 'n', 't'],
+  ['a', 'c', 'n', 'n', 't', 't'],
+  ['t', 'n', 'i', 'i', 'p', 'p'],
+  ['a', 'o', 'o', 'o', 'a', 'a'],
+  ['s', 'a', 'a', 'a', 'o', 'o'],
+  ['k', 'a', 'i', 'o', 'k', 'i'],
 ];
-console.log(findWord(grid, 'ABCG')); // [[0, 0], [1, 0], [2, 0], [3, 0]]
+console.log(findWord(grid, 'catnip')); // [(1, 1), (1, 2), (1, 3), (2, 3), (3, 3), (3, 4) ]
