@@ -11,7 +11,6 @@
 
 const arr = [3, 34, 4, 12, 5, 2];
 target = 4236;
-var isTrue = false;
 var dp = new Array(arr.length + 1)
             .fill(0)
             .map(() => new Array(target + 1).fill(0));
