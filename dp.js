@@ -76,19 +76,31 @@ const rodcutting = () => {
 }
 
 const longestCommonSubSequence = (str1, str2) => {
-    const dp = new Array(str1.length + 1).fill(-1).map( _=> new Array(str2.length + 1).fill(-1));
+    const dp = new Array(str1.length + 1).fill('').map( _=> new Array(str2.length + 1).fill(''));
 
-    const recurse = (strlen1, strlen2,) => {
-        if(strlen1 == 0 || strlen2 == 0)return 0;
-        if(dp[strlen1][strlen2] != -1)return dp[strlen1][strlen2]
-        if(str1[strlen1 - 1] === str2[strlen2 - 1]){
-            return dp[strlen1][strlen2] = 1 + recurse(strlen1 - 1, strlen2 - 1);
-        }
-        return dp[strlen1][strlen2] =  Math.max(recurse(strlen1-1, strlen2), recurse(strlen1, strlen2-1 ))
-    }
     let strlen1 = str1.length, strlen2 = str2.length
+    for(let i = 0 ; i < strlen1 + 1; i++){
+        for(let j = 0; j < strlen2 + 1; j++){
+            if(i == 0 || j == 0){
+                dp[i][j] = 0;
+            }
+        }
+    }
+
+    const recurse = (strlen1, strlen2) => {
+        for(let row = 1; row < strlen1 + 1; row++){
+            for(let col = 1; col < strlen2 + 1; col++){
+                if(str1[row-1] == str2[col-1]){
+                    dp[row][col] = 1 + dp[row - 1][col - 1];
+                } else {
+                    dp[row][col] = Math.max(dp[row-1][col], dp[row][col-1]);
+                }
+            }
+        }
+    }
+    
     recurse(strlen1, strlen2);
-    return dp[strlen1][strlen2];
+    return (dp[strlen1][strlen2])
 }
 
 console.log(longestCommonSubSequence("abcde", "ace" ));
