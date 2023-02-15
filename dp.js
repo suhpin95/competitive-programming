@@ -74,4 +74,21 @@ const rodcutting = () => {
     }
     return recurse(arr.length, arr.length);
 }
-console.log(rodcutting());
+
+const longestCommonSubSequence = (str1, str2) => {
+    const dp = new Array(str1.length + 1).fill(-1).map( _=> new Array(str2.length + 1).fill(-1));
+
+    const recurse = (strlen1, strlen2,) => {
+        if(strlen1 == 0 || strlen2 == 0)return 0;
+        if(dp[strlen1][strlen2] != -1)return dp[strlen1][strlen2]
+        if(str1[strlen1 - 1] === str2[strlen2 - 1]){
+            return dp[strlen1][strlen2] = 1 + recurse(strlen1 - 1, strlen2 - 1);
+        }
+        return dp[strlen1][strlen2] =  Math.max(recurse(strlen1-1, strlen2), recurse(strlen1, strlen2-1 ))
+    }
+    let strlen1 = str1.length, strlen2 = str2.length
+    recurse(strlen1, strlen2);
+    return dp[strlen1][strlen2];
+}
+
+console.log(longestCommonSubSequence("abcde", "ace" ));
