@@ -118,4 +118,22 @@ const longestCommonSubSequence = (str1, str2) => {
     return commonStr.split("").reverse().join("");
 }
 
-console.log(longestCommonSubSequence("abcde", "abcfe" ));
+const supersequence= (str1, str2) => {
+    // lcs logic
+    let len1 = str1.length;
+    let len2 = str2.length;
+    const dp = new Array(len1 + 1).fill(-1).map( _ => new Array(len2 + 1).fill(-1));
+    const recurse = (len1, len2) => {
+        if(len1 == 0 || len2 == 0){
+            return 0;
+        }
+        if(dp[len1][len2] != -1)return dp[len1][len2];
+        if(str1[len1 - 1] === str2[len2 - 1]){
+            return dp[len1][len2] = 1 + recurse(len1 - 1, len2 - 1)
+        }
+        return dp[len1][len2] =  Math.max(recurse(len1 - 1, len2), recurse(len1, len2 - 1));
+    }
+    let lcs = recurse(len1, len2);
+    return len1 + len2 - lcs
+}
+console.log(supersequence("abcdeh", "abfcehjk"))
