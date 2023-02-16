@@ -78,9 +78,9 @@ const rodcutting = () => {
 const longestCommonSubSequence = (str1, str2) => {
     const dp = new Array(str1.length + 1).fill('').map( _=> new Array(str2.length + 1).fill(''));
 
-    let strlen1 = str1.length, strlen2 = str2.length
-    for(let i = 0 ; i < strlen1 + 1; i++){
-        for(let j = 0; j < strlen2 + 1; j++){
+    let len1 = str1.length, len2 = str2.length
+    for(let i = 0 ; i < len1 + 1; i++){
+        for(let j = 0; j < len2 + 1; j++){
             if(i == 0 || j == 0){
                 dp[i][j] = 0;
             }
@@ -99,27 +99,23 @@ const longestCommonSubSequence = (str1, str2) => {
         }
     }
     
-    recurse(strlen1, strlen2);
-    return (dp[strlen1][strlen2])
-}
-
-const longestCommonSubString = (str1, str2) => {
-
-    const len1 = str1.length;
-    const len2 = str2.length
-    let len = 0;
-    const recurse =(len1, len2) => {
-        if(len1 == 0 || len2 == 0)return;
+    recurse(len1, len2);
+    
+    let commonStr = "";
+    while(len1 > 0 && len2 > 0){
         if(str1[len1] == str2[len2]){
-            return len = Math.max(1 + recurse(len1-1, len2-1), len);
-        } else{
-            return 0;
+            commonStr += str2[len2-1];
+            len1--;
+            len2--;
+        } else {
+            if(dp[len1 - 1][len2] > dp[len1][len2-1]){
+                len1--;
+            } else {
+                len2--;
+            }
         }
     }
-
-    recurse(len1, len2);
-    return len
+    return commonStr.split("").reverse().join("");
 }
 
-console.log(longestCommonSubString("abefg", "abghf"));
-
+console.log(longestCommonSubSequence("abcde", "abcfe" ));
