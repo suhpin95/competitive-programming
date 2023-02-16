@@ -122,18 +122,45 @@ const supersequence= (str1, str2) => {
     // lcs logic
     let len1 = str1.length;
     let len2 = str2.length;
-    const dp = new Array(len1 + 1).fill(-1).map( _ => new Array(len2 + 1).fill(-1));
+    const dp = new Array(len1 + 1).fill("").map( _ => new Array(len2 + 1).fill(""));
+    for(let i = 0; i < len1 + 1; i++){
+        for(let j = 0; j < len2 + 1; j++){
+            if(i == 0 || j==0){
+                dp[i][j] = 0;
+            }
+        }
+    }
+    console.log(dp)
     const recurse = (len1, len2) => {
-        if(len1 == 0 || len2 == 0){
-            return 0;
+        for(let row = 1; row < len1+1; row++){
+            for(let col = 1; col < len2 + 1; col++){
+                if(str1[len1 -1] === str2[len2 - 1]){
+                    dp[row][col] = 1 + dp[row-1][col-1];
+                } else {
+                    dp[row][col] = Math.max(dp[row-1][col], dp[row][col-1]);
+                }      
+            }
         }
-        if(dp[len1][len2] != -1)return dp[len1][len2];
-        if(str1[len1 - 1] === str2[len2 - 1]){
-            return dp[len1][len2] = 1 + recurse(len1 - 1, len2 - 1)
-        }
-        return dp[len1][len2] =  Math.max(recurse(len1 - 1, len2), recurse(len1, len2 - 1));
+        return dp[len1][len2]
     }
     let lcs = recurse(len1, len2);
-    return len1 + len2 - lcs
+    return (len1 + len2) - lcs
 }
 console.log(supersequence("abcdeh", "abfcehjk"))
+
+// Minimum Number of Insertion and Deletion to convert String a to String b
+var minDistance = function(word1, word2) {
+    // perform lcs
+    // this gives the length of the LCS string
+    // then perform substraction from the first string with the lcs
+    // then perform substraction from the LCS string with the string2
+
+    let len1 = word1.length;
+    let len2 = word2.length
+    const LCS = (len1, len2) => {
+        if(len1 === 0 || len2 === 0){
+            return 0;
+        }
+        
+    }
+};
