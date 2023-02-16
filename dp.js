@@ -103,4 +103,23 @@ const longestCommonSubSequence = (str1, str2) => {
     return (dp[strlen1][strlen2])
 }
 
-console.log(longestCommonSubSequence("abcde", "ace" ));
+const longestCommonSubString = (str1, str2) => {
+
+    const len1 = str1.length;
+    const len2 = str2.length
+    let len = 0;
+    const recurse =(len1, len2) => {
+        if(len1 == 0 || len2 == 0)return;
+        if(str1[len1] == str2[len2]){
+            return len = Math.max(1 + recurse(len1-1, len2-1), len);
+        } else{
+            return 0;
+        }
+    }
+
+    recurse(len1, len2);
+    return len
+}
+
+console.log(longestCommonSubString("abefg", "abghf"));
+
