@@ -206,6 +206,6 @@ const makePalindrome = function(s) {
             return dp[len1][len2]=Math.min(recurse(len1 - 1, len2), recurse(len1, len2 - 1));
         }
     }
-    return recurse(len1, len2);
+    return (str1.length - recurse(len1, len2));
 };
 console.log(makePalindrome("agbcba"));
