@@ -140,7 +140,7 @@ const supersequence= (str1, str2) => {
     let lcs = recurse(len1, len2);
     return (len1 + len2) - lcs
 }
-console.log(supersequence("AGGTAB", "GXTXAYB"))
+// console.log(supersequence("AGGTAB", "GXTXAYB"))
 // Minimum Number of Insertion and Deletion to convert String a to String b
 var minDistance = function(str1, str2) {
     // perform lcs
@@ -171,4 +171,20 @@ var minDistance = function(str1, str2) {
     return noOfInsertion + noOfDeletion // total steps or operation
 };
 
-console.log(minDistance("sea", "eat"));
+// console.log(minDistance("sea", "eat"));
+
+const longestPalindromeSubSeq = (str1, str2) => {
+    let len1 = str1.length;
+    let len2 = str2.length;
+    const recurse = (len1, len2) => {
+        if(len1 == 0 || len2 == 0)return 0;
+        if(str1[len1-1] == str2[len2-1] ){
+            return 1+ recurse(len1 - 1, len2 -1);
+        } else{
+            return Math.max(recurse(len1 -1, len2), recurse(len1, len2 - 1))
+        }
+    }
+    return recurse(len1, len2);
+}
+let str = "bbbab";
+console.log(longestPalindromeSubSeq(str, str.split("").reverse().join()));
