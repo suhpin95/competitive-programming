@@ -186,5 +186,26 @@ const longestPalindromeSubSeq = (str1, str2) => {
     }
     return recurse(len1, len2);
 }
-let str = "bbbab";
-console.log(longestPalindromeSubSeq(str, str.split("").reverse().join()));
+// let str = "bbbab";
+// console.log(longestPalindromeSubSeq(str, str.split("").reverse().join()));
+
+const makePalindrome = function(s) {
+    let str1 = s;
+    let str2 = s.split("").reverse().join();
+
+    let len1 = str1.length;
+    let len2 = str2.length;
+    const dp = new Array(len1 + 1).fill(-1).map(_ => new Array(len2 + 1).fill(-1));
+    const recurse = (len1, len2) => {
+        if(len1 == 0 || len2 == 0){
+            return 0;
+        }
+        if(str1[len1 - 1] == str2[len2 - 1]){
+            return dp[len1][len2] =  1 + recurse(len1 - 1, len2 - 1)
+        } else {
+            return dp[len1][len2]=Math.min(recurse(len1 - 1, len2), recurse(len1, len2 - 1));
+        }
+    }
+    return recurse(len1, len2);
+};
+console.log(makePalindrome("agbcba"));
