@@ -259,4 +259,33 @@ const printSupersequence = (str1, str2) => {
     return result.split("").reverse().join("");
 }
 
-console.log(printSupersequence("AGGTAB", "GXTXAYB"))
+// console.log(printSupersequence("AGGTAB", "GXTXAYB"))
+
+/**
+ * Find if the subsequence of str1 is present in the str2
+ * return boolean value
+ * @param {*} str1 
+ * @param {*} str2
+ */
+const sequencePatternMatching = (str1, str2) => {
+    let len1 = str1.length;
+    let len2 = str2.length
+    
+    const dp = new Array(len1 + 1).fill(-1).map(_ => new Array(len2 + 1).fill(-1));
+    // use the concept of LCS
+    
+    const recurse = (len1, len2) =>{
+        if(len1 == 0 || len2 == 0){
+            return 0;
+        }
+        if(str1[len1 - 1] == str2[len2 - 1]){
+            return dp[len1][len2] = 1+ recurse(len1 - 1, len2 - 1);
+        } else {
+            return dp[len1][len2] = Math.max(recurse(len1 - 1, len2), recurse(len1, len2 - 1));
+        }
+    }
+    // compare the length of the lcs with the first str
+    recurse(len1, len2);
+    return dp[len1][len2] === len1;
+}
+console.log(sequencePatternMatching("axy", "adxcpy"));
