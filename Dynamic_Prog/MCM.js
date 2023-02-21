@@ -10,7 +10,18 @@ const MCM= (array) => {
             return 0;
         }
         for(let k = left; k < right; k++){
-            let tempAns = solve(left, k, arr)+solve(k + 1, right, arr) + arr[left - 1] * arr[k] * arr[right];
+            let leftAns, rightAns;
+            if(dp[left][k] != -1){
+                leftAns = dp[left][k];
+            } else {
+                leftAns = solve(left, k , arr)
+            }
+            if(dp[k+1][right] != -1){
+                rightAns = dp[k + 1][right];
+            } else {
+                rightAns = solve(k + 1, right, arr);
+            }
+            let tempAns = left + right + arr[left - 1] * arr[k] * arr[right];
             if (tempAns < result) {
                 result = tempAns;
             }
@@ -73,4 +84,4 @@ const palindromePartitioning = (str) => {
     }
     return solve(left, right, str);
 }
-console.log(palindromePartitioning("aab"));
+console.log(palindromePartitioning("leet"));
