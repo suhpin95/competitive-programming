@@ -20,7 +20,7 @@ class Trie{
     }
     search(word){
         let searchNode = this._dfs(word, this.root);
-        return searchNode.isEnd && searchNode != null;
+        return searchNode != null && searchNode.isEnd;
     }
     startsWith(prefix){
         let searchNode = this._dfs(prefix, this.root);
