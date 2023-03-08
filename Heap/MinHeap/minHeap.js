@@ -98,3 +98,5 @@ minHeap.display();
 minHeap.deletion();
 minHeap.display();
 console.log("No of elements in the heap",minHeap.size())
+
+export default minHeap;
