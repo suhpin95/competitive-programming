@@ -15,44 +15,26 @@
 let n = 3, flights = [[0,1,100],[1,2,100],[0,2,500]], src = 0, dst = 2, k = 0
 
 var findCheapestPrice = function(n, flights, src, dst, k) {
-    // adjList
-    const graph = {};
-    for(let i = 0; i< n; i++){
-        graph[i] = new Array();
-    }
-    for(const[src, dest, weight] of flights){
-        graph[src].push([dest, weight]);
-    }
-    // heap
-    console.log(graph)
-    let minHeap = [];
-    minHeap.push([src, 0, 0]);
-    // go until dest
-
-    let stops = new Array(n).fill(Number.MAX_SAFE_INTEGER);
-    let result = 0;
-    while(minHeap.length){
-        console.log(`[${stops}]`+" heap:- "+ minHeap)
-        let[node, cost, steps] = minHeap.shift();
-        if(steps > k + 1 || steps > stops[node])continue;
-        stops[node] = steps;
-        result = Math.max(cost, result);
-        if(src == dst){
-            break;
-        }
-        if(graph[node].length == 0)continue
-        for(let [edge, newCost] of graph[node]){
-             //the number of stops exceeds the limit.
-                minHeap.push([edge, cost + newCost, steps+1]);
-                _sort();
-        }
-    }
-
-
-    function _sort (){
-        minHeap.sort((a,b) => a[1] - b[1]);
-    }
-    return result != 0 ? result : -1;
+    return bellManFord(n, flights, src, dst, k);
 };
+
+const bellManFord = (n, flights, src, dst, k) => {
+    /**
+     * Improved Bellman ford using dp concept
+     */
+    let prices = new Array(n).fill(Infinity);
+    prices[src] = 0;
+    for(let i = 0; i <= k; i++){
+        let tempPrice = [...prices];
+        for(const [s, d, w] of flights){
+            if(prices[s] == Infinity)continue;
+            if(tempPrice[d] > prices[s] + w){
+                tempPrice[d] = prices[s] + w;
+            }
+        }
+        prices = [...tempPrice];
+    }
+    return prices[dst] == Infinity ? -1: prices[dst];
+}
 
 console.log(findCheapestPrice(n, flights, src, dst, k));
