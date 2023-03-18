@@ -84,4 +84,4 @@ const palindromePartitioning = (str) => {
     }
     return solve(left, right, str);
 }
-console.log(palindromePartitioning("leet"));
+console.log(palindromePartitioning("ammadad"));

@@ -110,3 +110,23 @@ const removeDuplicates = (nums) => {
     console.log(nums)
 }
 removeDuplicates(nums);
+
+function getWays(n, c) {
+  // Write your code here
+  let target = n;
+  let arr = c;
+  let count = 0;
+  const recurse = (index, target) => {        
+      if(target == 0)return count+=1;
+      if(index == 0)return 0;
+      if(arr[index - 1] >= target){
+          return recurse(index - 1, target)
+      }
+      return recurse(index, target - arr[index - 1]) + recurse(index - 1, target);
+  }
+  const len = arr.length;
+  recurse(len, target);
+  return count;
+}
+
+console.log(getWays(3, [8,3,1,2]));
