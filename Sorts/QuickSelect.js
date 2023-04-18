@@ -54,5 +54,4 @@ performQuickSelect.addElement(9)
 
 let arr = performQuickSelect.Data
 
-console.log(performQuickSelect.findKthLargestElement(arr))
-console.log(arr);
+console.log(performQuickSelect.findKthLargestElement(arr));
